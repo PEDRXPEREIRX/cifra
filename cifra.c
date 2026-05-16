@@ -90,13 +90,8 @@ void decifrar(char *arqMen, char *arqLiv, char *arqCifra){
 int main(void){
     srand((unsigned)time(NULL));
     char arqMen[50], arqLiv[50], arqCifra[50];
-    int escolha;
 
-    printf("Escolha -> [1] Cifrar   [2] Decifrar: ");
-    while((scanf("%d", &escolha)) != 1){
-        printf("Escolha um inteiro (1 ou 2): ");
-        while(getchar() != '\n');
-    } while(getchar() != '\n');
+    printf("### Cifrar e decifrar mensagem ###\n\n");
 
     printf("Nome do arquivo da mensagem: ");
     scanf("%s", arqMen);
