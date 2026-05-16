@@ -17,13 +17,13 @@ void cifrar(char *arqMen, char *arqLiv, char *arqCifra){
 
     while(fscanf(mensagem, "%s", strMen) != EOF){
         for(i=0; strMen[i]; i++)
-            if(isalpha(strMen[i])){
+            if(isalpha(strMen[i])){ // usei a funcao isalpha da biblioteca ctype em troca do if(strMen[i] >= 'A' &&...
                 cont=0;
-                fseek(livro, 0, SEEK_SET);
+                fseek(livro, 0, SEEK_SET); // Voltar sempre pro inicio do arquivo
                 while(fscanf(livro, "%s", strLiv) != EOF){
                     for(j=0; strLiv[j]; j++)
                         if(tolower(strLiv[j]) == tolower(strMen[i]))
-                            cont++;
+                            cont++; // Loop para contar o total de ocorrencias da letra atual
                 }
                 if(cont>0){
                     sort = rand()%cont+1;
@@ -34,7 +34,7 @@ void cifrar(char *arqMen, char *arqLiv, char *arqCifra){
                             if(tolower(strMen[i]) == tolower(strLiv[k])){
                                 sort--; // Decremento sort pra "plv" e "pos" receber a "sort" ocorrencia
                                 if(sort==0){
-                                    plv = j+1;
+                                    plv = j+1; // +1 pra contar a partir do 1 e nao do 0
                                     pos = k+1;
                                     fprintf(cifra, "%d,%d ", plv, pos);
                                     break;
@@ -44,7 +44,7 @@ void cifrar(char *arqMen, char *arqLiv, char *arqCifra){
                     }
                 }
                 else {
-                    plv = 0;
+                    plv = 0; // Caso nao tenha a letra no livro
                     pos = 0;
                     fprintf(cifra, "%d,%d ", plv, pos);
                 }
