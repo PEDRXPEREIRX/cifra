@@ -7,7 +7,7 @@ void cifrar(char *arqMen, char *arqLiv, char *arqCifra){
     FILE *mensagem;
     FILE *livro;
     FILE *cifra;
-    char strMen[50], strLiv[50];
+    char strMen[99], strLiv[99];
     int plv, pos; // plv = posicao da palavra -> pos = posicao na palavra
     int cont, sort; // cont = total de ocorrencias do caractere -> sort = recebe rand de 1 ate cont
     int i, j, k;
@@ -62,7 +62,7 @@ void decifrar(char *arqMen, char *arqLiv, char *arqCifra){
     FILE *mensagem;
     FILE *livro;
     FILE *cifra;
-    char strMen[50], strLiv[50];
+    char strLiv[99];
     int i, plv, pos; // plv = posicao da palavra -> pos = posicao na palavra
 
     mensagem = fopen(arqMen, "r");
@@ -78,7 +78,7 @@ void decifrar(char *arqMen, char *arqLiv, char *arqCifra){
             fprintf(cifra, "#");
         else{
             fseek(livro, 0, SEEK_SET);
-            while(fscanf(livro, "%s", strLiv)){
+            while(fscanf(livro, "%s", strLiv) != EOF){
                 i++; // da loop incrementando i ate chegar na palavra (dada pelo valor de plv)
                 if(i==plv){
                     fprintf(cifra, "%c", strLiv[pos-1]);
@@ -95,7 +95,7 @@ void decifrar(char *arqMen, char *arqLiv, char *arqCifra){
 
 int main(void){
     srand((unsigned)time(NULL));
-    char arqMen[50], arqLiv[50], arqCifra[50];
+    char arqMen[99], arqLiv[99], arqCifra[99];
 
     printf("### Cifrar e decifrar mensagem ###\n\n");
 
