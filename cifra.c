@@ -98,30 +98,23 @@ int main(void){
         while(getchar() != '\n');
     } while(getchar() != '\n');
 
-    switch(escolha){
-        case 1:
-            printf("Nome do arquivo da mensagem: ");
-            scanf("%s", arqMen);
-            printf("Nome do arquivo do livro: ");
-            scanf("%s", arqLiv);
-            printf("Nome do arquivo da cifra: ");
-            scanf("%s", arqCifra);
-            cifrar(arqMen, arqLiv, arqCifra);
-            printf("\n");
-            break;
-        case 2:
-            printf("Nome do arquivo cifrado: ");
-            scanf("%s", arqMen);
-            printf("Nome do arquivo do livro: ");
-            scanf("%s", arqLiv);
-            printf("Nome do arquivo decifrado: ");
-            scanf("%s", arqCifra);
-            decifrar(arqMen, arqLiv, arqCifra);
-            printf("\n");
-            break;
-        default:
-            printf("Opcao invalida!!!\n");
-    }
+    printf("Nome do arquivo da mensagem: ");
+    scanf("%s", arqMen);
+    printf("Nome do arquivo do livro: ");
+    scanf("%s", arqLiv);
+    printf("Nome do arquivo da cifra: ");
+    scanf("%s", arqCifra);
+    cifrar(arqMen, arqLiv, arqCifra);
+    printf("\n");
+
+    printf("Nome do arquivo cifrado: ");
+    scanf("%s", arqMen);
+    printf("Nome do arquivo do livro: ");
+    scanf("%s", arqLiv);
+    printf("Nome do arquivo decifrado: ");
+    scanf("%s", arqCifra);
+    decifrar(arqMen, arqLiv, arqCifra);
+    printf("\n");
 
     return 0;
 }
