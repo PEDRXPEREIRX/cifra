@@ -7,16 +7,29 @@ int main(void){
     srand((unsigned)time(NULL));
     FILE *mensagem;
     FILE *livro;
+    FILE *cifra;
     char strMen[50], strLiv[50];
+    char arqMen[50], arqLiv[50], arqCifra[50];
     int plv, pos; // plv = posicao da palavra -> pos = posicao na palavra
     int cont, sort; // cont = total de ocorrencias do caractere -> sort = recebe rand de 1 ate cont
     int i, j, k;
 
-    mensagem = fopen("mensagem.txt", "r");
-    livro = fopen("livro.txt", "r");
+    printf("Nome do arquivo da mensagem: ");
+    scanf("%s", arqMen);
+    printf("Nome do arquivo do livro: ");
+    scanf("%s", arqLiv);
+    printf("Nome do arquivo da cifra: ");
+    scanf("%s", arqCifra);
+
+
+    mensagem = fopen(arqMen, "r");
+    if(mensagem == NULL){ printf("Erro ao abrir mensagem\n"); return 1; }
+    livro = fopen(arqLiv, "r");
+    if(livro == NULL){ printf("Erro ao abrir livro\n"); return 1; }
+    cifra = fopen(arqCifra, "w");
+    if(cifra == NULL){ printf("Erro ao abrir cifra\n"); return 1; }
 
     while(fscanf(mensagem, "%s", strMen) != EOF){
-        printf("%s\n", strMen);
         for(i=0; strMen[i]; i++)
             if(isalpha(strMen[i])){
                 cont=0;
@@ -33,11 +46,11 @@ int main(void){
                 while(fscanf(livro, "%s", strLiv) != EOF){
                     for(k=0; strLiv[k]; k++)
                         if(tolower(strMen[i]) == tolower(strLiv[k])){
-                            sort--;
+                            sort--; // Decremento sort pra plv e pos receber a "sort" ocorrencia
                             if(sort==0){
                                 plv = j+1;
                                 pos = k+1;
-                                printf("[%d,%d] \n", plv, pos);
+                                fprintf(cifra, "%d,%d ", plv, pos);
                                 break;
                             }
                         }
@@ -45,10 +58,10 @@ int main(void){
                 }
             }
     }
+
     fclose(mensagem);
     fclose(livro);
-
-
+    fclose(cifra);
 
     return 0;
 }
