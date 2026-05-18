@@ -25,7 +25,7 @@ void cifrar(char *arqMen, char *arqLiv, char *arqCifra){
                 fseek(livro, 0, SEEK_SET); // Voltar sempre pro inicio do arquivo
                 while(fscanf(livro, "%s", strLiv) != EOF){
                     for(j=0; strLiv[j]; j++)
-                        if(tolower(strLiv[j]) == tolower(strMen[i]))
+                        if(tolower(strLiv[j]) == tolower(strMen[i])) // usei funcao tolower da biblioteca ctype para forçar comparar sempre letras minusculas
                             cont++; // Loop para contar o total de ocorrencias da letra atual
                 }
                 if(cont>0){
@@ -81,7 +81,7 @@ void decifrar(char *arqMen, char *arqLiv, char *arqCifra){
             while(fscanf(livro, "%s", strLiv) != EOF){
                 i++; // da loop incrementando i ate chegar na palavra (dada pelo valor de plv)
                 if(i==plv){
-                    fprintf(cifra, "%c", strLiv[pos-1]);
+                    fprintf(cifra, "%c", strLiv[pos-1]); // pos-1 pra tirar o +1 adicionado na funcao cifrar
                     break;
                 }
             }
