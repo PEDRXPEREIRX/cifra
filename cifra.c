@@ -21,9 +21,9 @@ void cifrar(char *arqLiv, char *arqMen, char *arqCifra){
     if(cifra==NULL){ printf("\nErro ao abrir arquivo (cifrado)!\n"); exit(1); }
 
     while(fscanf(livro, "%s", strLiv) != EOF){
-        totPlv++;
+        totPlv++; // totPlv recebe o total de palavras no livro
         for(i=0; strLiv[i]; i++);
-        if(i>totPos) totPos=i;
+        if(i>totPos) totPos=i; // totPos recebe o total de letras da maior palavra
     }
 
     while(fscanf(mensagem, "%s", strMen) != EOF){
@@ -56,7 +56,7 @@ void cifrar(char *arqLiv, char *arqMen, char *arqCifra){
                     }
                 }
                 else {
-                    rec = rand()%2;
+                    rec = rand()%2; // se 0 o plv = 0 se não o pos = 0, para ficar diferente no arquivo cifrado (0,X ou X,0)
                     if(!rec){
                         plv = 0;
                         pos = rand()%totPos+1;
@@ -88,7 +88,7 @@ void decifrar(char *arqLiv, char *arqMen, char *arqCifra){
     cifra = fopen(arqCifra, "w");
     if(cifra==NULL){ printf("\nErro ao abrir arquivo (decifrado)!\n"); exit(1); }
 
-    while(fscanf(mensagem, "%d,%d", &plv, &pos) == 2){
+    while(fscanf(mensagem, "%d,%d", &plv, &pos) != EOF){
         i=0;
         if(plv==0 || pos==0)  // caso seja uma letra que nao existe no livro
             fprintf(cifra, "_");
