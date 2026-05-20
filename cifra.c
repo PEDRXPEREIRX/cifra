@@ -3,7 +3,7 @@
 #include <ctype.h>
 #include <time.h>
 
-void cifrar(char *arqMen, char *arqLiv, char *arqCifra){
+void cifrar(char *arqLiv, char *arqMen, char *arqCifra){
     FILE *mensagem;
     FILE *livro;
     FILE *cifra;
@@ -11,6 +11,7 @@ void cifrar(char *arqMen, char *arqLiv, char *arqCifra){
     int plv, pos; // plv = posicao da palavra -> pos = posicao na palavra
     int cont, sort; // cont = total de ocorrencias do caractere -> sort = recebe rand de 1 ate cont
     int i, j, k;
+    int totPlv=0, totPos=0, rec;
 
     mensagem = fopen(arqMen, "r");
     if(mensagem==NULL){ printf("\nErro ao abrir arquivo (mensagem)!\n"); exit(1); }
@@ -18,6 +19,12 @@ void cifrar(char *arqMen, char *arqLiv, char *arqCifra){
     if(livro==NULL){ printf("\nErro ao abrir arquivo (livro)!\n"); exit(1); }
     cifra = fopen(arqCifra, "w");
     if(cifra==NULL){ printf("\nErro ao abrir arquivo (cifrado)!\n"); exit(1); }
+
+    while(fscanf(livro, "%s", strLiv) != EOF){
+        totPlv++;
+        for(i=0; strLiv[i]; i++);
+        if(i>totPos) totPos=i;
+    }
 
     while(fscanf(mensagem, "%s", strMen) != EOF){
         for(i=0; strMen[i]; i++)
@@ -49,8 +56,15 @@ void cifrar(char *arqMen, char *arqLiv, char *arqCifra){
                     }
                 }
                 else {
-                    plv = 0; // Caso nao tenha a letra no livro
-                    pos = 0;
+                    rec = rand()%2;
+                    if(!rec){
+                        plv = 0;
+                        pos = rand()%totPos+1;
+                    }
+                    else {
+                        plv = rand()%totPlv+1;
+                        pos = 0;
+                    }
                     fprintf(cifra, "%d,%d ", plv, pos);
                 }
             }
@@ -60,7 +74,7 @@ void cifrar(char *arqMen, char *arqLiv, char *arqCifra){
     fclose(cifra);
 }
 
-void decifrar(char *arqMen, char *arqLiv, char *arqCifra){
+void decifrar(char *arqLiv, char *arqMen, char *arqCifra){
     FILE *mensagem;
     FILE *livro;
     FILE *cifra;
@@ -76,8 +90,8 @@ void decifrar(char *arqMen, char *arqLiv, char *arqCifra){
 
     while(fscanf(mensagem, "%d,%d", &plv, &pos) == 2){
         i=0;
-        if(plv==0)  // caso seja uma letra que nao existe no livro
-            fprintf(cifra, "#");
+        if(plv==0 || pos==0)  // caso seja uma letra que nao existe no livro
+            fprintf(cifra, "_");
         else{
             fseek(livro, 0, SEEK_SET);
             while(fscanf(livro, "%s", strLiv) != EOF){
@@ -100,23 +114,22 @@ int main(void){
     char arqMen[99], arqLiv[99], arqCifra[99];
 
     printf("*** Cifrar Mensagem ***\n");
-    printf("Nome do arquivo da mensagem: ");
+    printf("Nome do arquivo livro: ");
+    scanf("%s", arqLiv);
+    printf("Nome do arquivo original: ");
     scanf("%s", arqMen);
+    printf("Nome do arquivo a ser cifrado: ");
+    scanf("%s", arqCifra);
+    cifrar(arqLiv, arqMen, arqCifra);
+
+    printf("\n*** Decifrar Mensagem ***\n");
     printf("Nome do arquivo do livro: ");
     scanf("%s", arqLiv);
-    printf("Nome do arquivo da cifra: ");
-    scanf("%s", arqCifra);
-    cifrar(arqMen, arqLiv, arqCifra);
-    printf("\n");
-
-    printf("*** Decifrar Mensagem ***\n");
     printf("Nome do arquivo cifrado: ");
     scanf("%s", arqMen);
-    printf("Nome do arquivo do livro: ");
-    scanf("%s", arqLiv);
-    printf("Nome do arquivo decifrado: ");
+    printf("Nome do arquivo a ser decifrado: ");
     scanf("%s", arqCifra);
-    decifrar(arqMen, arqLiv, arqCifra);
+    decifrar(arqLiv, arqMen, arqCifra);
     printf("\n*** Programa finalizado ***\n");
 
     return 0;
