@@ -12,11 +12,11 @@ void cifrar(char *arqMen, char *arqLiv, char *arqCifra){
     int cont, sort; // cont = total de ocorrencias do caractere -> sort = recebe rand de 1 ate cont
     int i, j, k;
     mensagem = fopen(arqMen, "r");
-    if(mensagem==NULL){ printf("\nErro ao abrir arquivo!\n"); exit(1); }
+    if(mensagem==NULL){ printf("\nErro ao abrir arquivo (mensagem)!\n"); exit(1); }
     livro = fopen(arqLiv, "r");
-    if(livro==NULL){ printf("\nErro ao abrir arquivo!\n"); exit(1); }
+    if(livro==NULL){ printf("\nErro ao abrir arquivo (livro)!\n"); exit(1); }
     cifra = fopen(arqCifra, "w");
-    if(cifra==NULL){ printf("\nErro ao abrir arquivo!\n"); exit(1); }
+    if(cifra==NULL){ printf("\nErro ao abrir arquivo (cifrado)!\n"); exit(1); }
 
     while(fscanf(mensagem, "%s", strMen) != EOF){
         for(i=0; strMen[i]; i++)
@@ -66,11 +66,11 @@ void decifrar(char *arqMen, char *arqLiv, char *arqCifra){
     int i, plv, pos; // plv = posicao da palavra -> pos = posicao na palavra
 
     mensagem = fopen(arqMen, "r");
-    if(mensagem==NULL){ printf("\nErro ao abrir arquivo!\n"); exit(1); }
+    if(mensagem==NULL){ printf("\nErro ao abrir arquivo (cifrado)!\n"); exit(1); }
     livro = fopen(arqLiv, "r");
-    if(livro==NULL){ printf("\nErro ao abrir arquivo!\n"); exit(1); }
+    if(livro==NULL){ printf("\nErro ao abrir arquivo (livro)!\n"); exit(1); }
     cifra = fopen(arqCifra, "w");
-    if(cifra==NULL){ printf("\nErro ao abrir arquivo!\n"); exit(1); }
+    if(cifra==NULL){ printf("\nErro ao abrir arquivo (decifrado)!\n"); exit(1); }
 
     while(fscanf(mensagem, "%d,%d", &plv, &pos) == 2){
         i=0;
