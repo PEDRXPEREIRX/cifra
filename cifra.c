@@ -11,6 +11,7 @@ void cifrar(char *arqMen, char *arqLiv, char *arqCifra){
     int plv, pos; // plv = posicao da palavra -> pos = posicao na palavra
     int cont, sort; // cont = total de ocorrencias do caractere -> sort = recebe rand de 1 ate cont
     int i, j, k;
+
     mensagem = fopen(arqMen, "r");
     if(mensagem==NULL){ printf("\nErro ao abrir arquivo (mensagem)!\n"); exit(1); }
     livro = fopen(arqLiv, "r");
@@ -36,13 +37,14 @@ void cifrar(char *arqMen, char *arqLiv, char *arqCifra){
                         for(k=0; strLiv[k]; k++)
                             if(tolower(strMen[i]) == tolower(strLiv[k])){
                                 sort--; // Decremento sort pra "plv" e "pos" receber a "sort" ocorrencia
-                                if(sort==0){
+                                if(!sort){
                                     plv = j+1; // +1 pra contar a partir do 1 e nao do 0
                                     pos = k+1;
                                     fprintf(cifra, "%d,%d ", plv, pos);
                                     break;
                                 }
                             }
+                        if(!sort) break;
                         j++;
                     }
                 }
@@ -81,7 +83,7 @@ void decifrar(char *arqMen, char *arqLiv, char *arqCifra){
             while(fscanf(livro, "%s", strLiv) != EOF){
                 i++; // da loop incrementando i ate chegar na palavra (dada pelo valor de plv)
                 if(i==plv){
-                    fprintf(cifra, "%c", strLiv[pos-1]); // pos-1 pra tirar o +1 adicionado na funcao cifrar
+                    fprintf(cifra, "%c", tolower(strLiv[pos-1])); // pos-1 pra tirar o +1 adicionado na funcao cifrar
                     break;
                 }
             }
@@ -97,8 +99,7 @@ int main(void){
     srand((unsigned)time(NULL));
     char arqMen[99], arqLiv[99], arqCifra[99];
 
-    printf("### Cifrar e decifrar mensagem ###\n\n");
-
+    printf("*** Cifrar Mensagem ***\n");
     printf("Nome do arquivo da mensagem: ");
     scanf("%s", arqMen);
     printf("Nome do arquivo do livro: ");
@@ -108,6 +109,7 @@ int main(void){
     cifrar(arqMen, arqLiv, arqCifra);
     printf("\n");
 
+    printf("*** Decifrar Mensagem ***\n");
     printf("Nome do arquivo cifrado: ");
     scanf("%s", arqMen);
     printf("Nome do arquivo do livro: ");
@@ -115,7 +117,7 @@ int main(void){
     printf("Nome do arquivo decifrado: ");
     scanf("%s", arqCifra);
     decifrar(arqMen, arqLiv, arqCifra);
-    printf("\n");
+    printf("\n*** Programa finalizado ***\n");
 
     return 0;
 }
